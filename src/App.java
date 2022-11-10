@@ -50,9 +50,9 @@ public class App {
         return inverted;
     }
 
-    static int positionPrime(int number) {
+    static int positionPrime(int prime) {
         for (int i = 0; i < primeArray.length; i++) {
-            if (primeArray[i] == number) {
+            if (primeArray[i] == prime) {
                 return i + 1;
             }
         }
