@@ -1,22 +1,31 @@
 import java.util.LinkedHashSet;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class App {
     static Integer[] primeArray;
 
     public static void main(String[] args) throws Exception {
         Scanner reader = new Scanner(System.in);
+        long timeStart, timePrimes, timeEnd;
         LinkedHashSet<Integer> sheldonPrimes = new LinkedHashSet<Integer>();
 
         System.out.print("Up to what number do you want to check?: ");
+        timeStart = System.currentTimeMillis();
         primeArray = getPrimeArray(reader.nextInt());
+        timePrimes = System.currentTimeMillis();
+        System.out.println("\nTime to generate prime array: "
+                + (TimeUnit.MILLISECONDS.toSeconds(timePrimes - timeStart)) + "s.");
         for (Integer integer : primeArray) {
             if (primeIsSheldonPrime(integer)) {
                 sheldonPrimes.add(integer);
             }
         }
-        System.out.println("Sheldon primes: " + sheldonPrimes);
-
+        timeEnd = System.currentTimeMillis();
+        System.out.println("\nTime to find sheldon primes: "
+                + (TimeUnit.MILLISECONDS.toSeconds(timeEnd - timePrimes)) + "s.");
+        System.out.println("\nTotal time: " + (TimeUnit.MILLISECONDS.toSeconds(timeEnd - timeStart)) + "s.");
+        System.out.println("\nSheldon primes: " + sheldonPrimes);
         reader.close();
     }
 
