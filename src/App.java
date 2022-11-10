@@ -8,11 +8,13 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner reader = new Scanner(System.in);
         long timeStart, timePrimes, timeEnd;
+        int max;
         LinkedHashSet<Integer> sheldonPrimes = new LinkedHashSet<Integer>();
 
         System.out.print("Up to what number do you want to check?: ");
+        max = reader.nextInt();
         timeStart = System.currentTimeMillis();
-        primeArray = getPrimeArray(reader.nextInt());
+        primeArray = getPrimeArray(max);
         timePrimes = System.currentTimeMillis();
         System.out.println("\nTime to generate prime array: "
                 + (TimeUnit.MILLISECONDS.toSeconds(timePrimes - timeStart)) + "s.");
