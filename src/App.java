@@ -1,16 +1,23 @@
 import java.util.LinkedHashSet;
+import java.util.Scanner;
 
 public class App {
+    static Integer[] primeArray;
+
     public static void main(String[] args) throws Exception {
+        Scanner reader = new Scanner(System.in);
         LinkedHashSet<Integer> sheldonPrimes = new LinkedHashSet<Integer>();
-        for (int i = 0; true; i++) {
-            if (isSheldonPrime(i)) {
-                sheldonPrimes.add(i);
-            }
-            if (i % 1000 == 0) {
-                System.out.println("Actual number: " + i + " - Sheldon primes: " + sheldonPrimes);
+
+        System.out.print("Up to what number do you want to check?: ");
+        primeArray = getPrimeArray(reader.nextInt());
+        for (Integer integer : primeArray) {
+            if (primeIsSheldonPrime(integer)) {
+                sheldonPrimes.add(integer);
             }
         }
+        System.out.println("Sheldon primes: " + sheldonPrimes);
+
+        reader.close();
     }
 
     static boolean isPrime(int number) {
@@ -35,13 +42,23 @@ public class App {
     }
 
     static int positionPrime(int number) {
-        int position = 1;
-        for (int i = 0; i < number; i++) {
-            if (isPrime(i)) {
-                position++;
+        for (int i = 0; i < primeArray.length; i++) {
+            if (primeArray[i] == number) {
+                return i + 1;
             }
         }
-        return position;
+        return -1;
+    }
+
+    static Integer[] getPrimeArray(int max) {
+        LinkedHashSet<Integer> primeList = new LinkedHashSet<Integer>();
+        for (int i = 0; i <= max; i++) {
+            if (isPrime(i)) {
+                primeList.add(i);
+            }
+        }
+        Integer[] primeArray = primeList.toArray(new Integer[primeList.size()]);
+        return primeArray;
     }
 
     static int multiplyDigits(int number) {
@@ -53,13 +70,11 @@ public class App {
         return product;
     }
 
-    static boolean isSheldonPrime(int number) {
-        if (isPrime(number)) {
-            int positionPrime = positionPrime(number);
-            if (positionPrime == invert(positionPrime(invert(number)))) {
-                if (multiplyDigits(number) == positionPrime) {
-                    return true;
-                }
+    static boolean primeIsSheldonPrime(int number) {
+        int positionPrime = positionPrime(number);
+        if (positionPrime == invert(positionPrime(invert(number)))) {
+            if (multiplyDigits(number) == positionPrime) {
+                return true;
             }
         }
         return false;
